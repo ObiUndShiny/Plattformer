@@ -9,12 +9,16 @@ public class Tile {
     private boolean solid;
     private int x;
     private int y;
+    private int u;
+    private int v;
 
-    public Tile(boolean solid,int x, int y)
+    public Tile(boolean solid,int x, int y, int u, int v)
     {
         this.solid = solid;
         this.x = x;
         this.y = y;
+        this.u = u;
+        this.v = v;
     }
 
     public boolean isSolid() {
@@ -27,6 +31,14 @@ public class Tile {
 
     public int getY() {
         return y;
+    }
+
+    public int getU() {
+        return u;
+    }
+
+    public int getV() {
+        return v;
     }
 }
 
