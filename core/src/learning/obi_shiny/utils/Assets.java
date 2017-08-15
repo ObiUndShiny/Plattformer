@@ -1,4 +1,4 @@
-package learning.obi_shiny;
+package learning.obi_shiny.utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

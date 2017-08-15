@@ -1,4 +1,4 @@
-package learning.obi_shiny;
+package learning.obi_shiny.world;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,4 +16,13 @@ public class Level {
         this.tiles = new ArrayList<Tile>();
     }
 
+    public void add(Tile tile)
+    {
+        tiles.add(tile);
+
+    }
+
+    public List<Tile> getTiles() {
+        return tiles;
+    }
 }

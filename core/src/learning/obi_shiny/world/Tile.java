@@ -1,4 +1,4 @@
-package learning.obi_shiny;
+package learning.obi_shiny.world;
 
 /**
  * Created by User on 07.08.2017.
