@@ -7,8 +7,11 @@ import com.badlogic.gdx.InputProcessor;
  * Created by User on 15.08.2017.
  */
 
-public class Touchscreen implements InputProcessor{
 
+public class Touchscreen implements InputProcessor {
+
+    private float x;
+    private float y;
 
     @Override
     public boolean keyDown(int keycode) {
@@ -28,9 +31,8 @@ public class Touchscreen implements InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        float x = 2*((screenX*1.0f)/ Gdx.graphics.getWidth())-1;
-        float y = -2*((screenY*1.0f)/ Gdx.graphics.getHeight())+1;
-        System.out.println( x + "|" + y +"|" + pointer);
+        x = 2*((screenX*1.0f)/ Gdx.graphics.getWidth())-1;
+        y = -2*((screenY*1.0f)/ Gdx.graphics.getHeight())+1;
 
         return false;
     }
@@ -42,6 +44,10 @@ public class Touchscreen implements InputProcessor{
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+        x = 2*((screenX*1.0f)/ Gdx.graphics.getWidth())-1;
+        y = -2*((screenY*1.0f)/ Gdx.graphics.getHeight())+1;
+
         return false;
     }
 
@@ -53,5 +59,13 @@ public class Touchscreen implements InputProcessor{
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 }

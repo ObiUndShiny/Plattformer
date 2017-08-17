@@ -6,38 +6,46 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import learning.obi_shiny.utils.Assets;
 import learning.obi_shiny.utils.Touchscreen;
+import learning.obi_shiny.world.Level;
+import learning.obi_shiny.world.Player;
+import learning.obi_shiny.world.Tile;
 
 public class Game extends ApplicationAdapter {
 
 	private SpriteBatch batch;
-	private learning.obi_shiny.world.Level level;
+	private Level level;
+	private Player player;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		learning.obi_shiny.utils.Assets.load();
-		level = new learning.obi_shiny.world.Level();
+		Assets.load();
+		level = new Level();
 		Touchscreen touchscreen = new Touchscreen();
 
 		for (int n = 0; n < 30; n++)
 		{
-			learning.obi_shiny.world.Tile tile = new learning.obi_shiny.world.Tile(true,n,0,1,1);
+			Tile tile = new Tile(true,n,0,1,1);
 			level.add(tile);
 		}
+
 		Gdx.input.setInputProcessor(touchscreen);
+		this.player = new Player(touchscreen);
 	}
 
 	@Override
 	public void render () {
 
+		player.update();
         clearScreen();
 
 		batch.begin();
-		for ( learning.obi_shiny.world.Tile t : level.getTiles())
+		for ( Tile t : level.getTiles())
 		{
-			TextureRegion texture = learning.obi_shiny.utils.Assets.tiles[t.getU()][t.getV()];
-			batch.draw(texture,t.getX()*100,t.getY()*100,100,100);
+			TextureRegion texture = Assets.tiles[t.getU()][t.getV()];
+			batch.draw(texture,(t.getX()-player.getX())*100,t.getY()*100,100,100);
 		}
 		batch.end();
 
@@ -47,7 +55,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		learning.obi_shiny.utils.Assets.tilesheet.dispose();
+		Assets.tilesheet.dispose();
 	}
 
 	private void clearScreen() {
