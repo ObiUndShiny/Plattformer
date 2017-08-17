@@ -16,8 +16,8 @@ public class Player {
     public Player (Touchscreen touchscreen)
     {
         this.touchscreen = touchscreen;
-        this.x = 0;
-        this.y = 0;
+        this.x = 5;
+        this.y = 1;
     }
 
     public void update()
@@ -26,11 +26,11 @@ public class Player {
         {
             if(touchscreen.getX() < -0.5)
             {
-                x+=SPEED;
+                x-=SPEED;
             }
             else
             {
-                x-=SPEED;
+                x+=SPEED;
             }
 
         }

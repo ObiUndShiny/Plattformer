@@ -3,6 +3,7 @@ package learning.obi_shiny;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -15,12 +16,15 @@ import learning.obi_shiny.world.Tile;
 public class Game extends ApplicationAdapter {
 
 	private SpriteBatch batch;
+	private BitmapFont fbatch;
 	private Level level;
 	private Player player;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		fbatch = new BitmapFont();
+
 		Assets.load();
 		level = new Level();
 		Touchscreen touchscreen = new Touchscreen();
@@ -33,6 +37,7 @@ public class Game extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(touchscreen);
 		this.player = new Player(touchscreen);
+		fbatch = Assets.pokefont;
 	}
 
 	@Override
@@ -45,8 +50,13 @@ public class Game extends ApplicationAdapter {
 		for ( Tile t : level.getTiles())
 		{
 			TextureRegion texture = Assets.tiles[t.getU()][t.getV()];
-			batch.draw(texture,(t.getX()-player.getX())*100,t.getY()*100,100,100);
+			batch.draw(texture,(t.getX()-player.getX()+5)*100,(t.getY())*100,100,100);
 		}
+
+		batch.draw(Assets.player[0][5],500 ,100 ,100,200);
+
+		fbatch.draw(batch, player.getX()+" | "+player.getY(), 10, Gdx.graphics.getHeight()-10);
+
 		batch.end();
 
 
