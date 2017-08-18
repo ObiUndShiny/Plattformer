@@ -12,6 +12,7 @@ public class Touchscreen implements InputProcessor {
 
     private float x;
     private float y;
+    private boolean dragged;
 
     @Override
     public boolean keyDown(int keycode) {
@@ -33,12 +34,15 @@ public class Touchscreen implements InputProcessor {
 
         x = 2*((screenX*1.0f)/ Gdx.graphics.getWidth())-1;
         y = -2*((screenY*1.0f)/ Gdx.graphics.getHeight())+1;
-
+        dragged = true;
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
+        dragged = false;
+
         return false;
     }
 
@@ -67,5 +71,9 @@ public class Touchscreen implements InputProcessor {
 
     public float getY() {
         return y;
+    }
+
+    public boolean isDragged() {
+        return dragged;
     }
 }

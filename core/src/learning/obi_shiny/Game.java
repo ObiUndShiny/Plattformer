@@ -50,7 +50,7 @@ public class Game extends ApplicationAdapter {
 		for ( Tile t : level.getTiles())
 		{
 			TextureRegion texture = Assets.tiles[t.getU()][t.getV()];
-			batch.draw(texture,(t.getX()-player.getX()+5)*100,(t.getY())*100,100,100);
+			batch.draw(texture,(t.getX()-player.getX()+5)*100,(t.getY()-player.getY()+1)*100,100,100);
 		}
 
 		batch.draw(Assets.player[0][5],500 ,100 ,100,200);

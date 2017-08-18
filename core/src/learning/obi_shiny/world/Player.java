@@ -1,6 +1,7 @@
 package learning.obi_shiny.world;
 
 import learning.obi_shiny.utils.Touchscreen;
+import learning.obi_shiny.utils.Vector;
 
 /**
  * Created by User on 16.08.2017.
@@ -9,42 +10,55 @@ import learning.obi_shiny.utils.Touchscreen;
 public class Player {
 
     private Touchscreen touchscreen;
-    private float x;
-    private float y;
     private static final float SPEED = 0.05f;
+    private Vector gravity;
+    private Vector velocity;
+    private Vector jump;
 
     public Player (Touchscreen touchscreen)
     {
         this.touchscreen = touchscreen;
-        this.x = 5;
-        this.y = 1;
+        this.gravity = new Vector(0,-0.01f);
+        this.jump = new Vector(0,0.05f);
+        this.velocity = new Vector(5,1);
     }
 
     public void update()
     {
-        if(touchscreen.getX() < 0)
+        if(touchscreen.isDragged())
         {
-            if(touchscreen.getX() < -0.5)
+
+            if(touchscreen.getX() < 0)
             {
-                x-=SPEED;
+                if(touchscreen.getX() < -0.5)
+                {
+                    velocity.setX(velocity.getX()-SPEED);
+                }
+                else
+                {
+                    velocity.setX(velocity.getX()+SPEED);
+                }
+
             }
             else
             {
-                x+=SPEED;
+                velocity.add(jump);
             }
-
         }
-        else
-        {
 
+        velocity.add(gravity);
+        if(velocity.getY() < 1)
+        {
+            velocity.setY(1);
         }
     }
 
     public float getX() {
-        return x;
+        return velocity.getX();
     }
 
     public float getY() {
-        return y;
+        return velocity.getY();
     }
+
 }
