@@ -10,21 +10,29 @@ import learning.obi_shiny.utils.Vector;
 public class Player {
 
     private Touchscreen touchscreen;
-    private static final float SPEED = 0.05f;
+    private static final float SPEED = 0.01f;
+    private static final int JUMP_TICKS = 20;
     private Vector gravity;
     private Vector velocity;
+    private Vector position;
     private Vector jump;
+    private boolean grounded;
+    private int frames_in_air = 0;
+
 
     public Player (Touchscreen touchscreen)
     {
         this.touchscreen = touchscreen;
         this.gravity = new Vector(0,-0.01f);
         this.jump = new Vector(0,0.05f);
-        this.velocity = new Vector(5,1);
+        this.position = new Vector(5,1);
+        this.velocity = new Vector(0,0);
+
     }
 
     public void update()
     {
+
         if(touchscreen.isDragged())
         {
 
@@ -42,23 +50,38 @@ public class Player {
             }
             else
             {
-                velocity.add(jump);
+                if(frames_in_air < JUMP_TICKS) {
+                    velocity.add(jump);
+                }
             }
         }
 
-        velocity.add(gravity);
-        if(velocity.getY() < 1)
+        grounded = position.getY() <= 1;
+
+        if(!grounded)
         {
-            velocity.setY(1);
+            frames_in_air++;
+            velocity.add(gravity);
+            position.add(velocity);
         }
+        else
+        {
+            frames_in_air = 0;
+            if(velocity.getY()>=0)
+            {
+                position.addY(velocity);
+            }
+            position.addX(velocity);
+        }
+        velocity.multiply(0.9f);
     }
 
     public float getX() {
-        return velocity.getX();
+        return position.getX();
     }
 
     public float getY() {
-        return velocity.getY();
+        return position.getY();
     }
 
 }
