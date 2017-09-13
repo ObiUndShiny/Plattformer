@@ -26,17 +26,27 @@ public class Game extends ApplicationAdapter {
 		fbatch = new BitmapFont();
 
 		Assets.load();
-		level = new Level();
 		Touchscreen touchscreen = new Touchscreen();
+
+		level = new Level();
 
 		for (int n = 0; n < 30; n++)
 		{
-			Tile tile = new Tile(true,n,0,1,1);
-			level.add(tile);
+			level.add(new Tile(true,n,0,2,1));
+			level.add(new Tile(true,n,1,2,1));
+			level.add(new Tile(true,n,2,1,1));
 		}
 
+		level.add(new Tile(false,8,3,0,4));
+		level.add(new Tile(false,9,3,0,4));
+		level.add(new Tile(false,10,3,0,4));
+		level.add(new Tile(false,5,3,0,1));
+		level.add(new Tile(true,10,3,0,4));
+		level.add(new Tile(true,2,3,1,1));
+		level.add(new Tile(true,3,3,1,1));
+
 		Gdx.input.setInputProcessor(touchscreen);
-		this.player = new Player(touchscreen);
+		this.player = new Player(touchscreen, level);
 		fbatch = Assets.pokefont;
 	}
 
@@ -50,12 +60,13 @@ public class Game extends ApplicationAdapter {
 		for ( Tile t : level.getTiles())
 		{
 			TextureRegion texture = Assets.tiles[t.getU()][t.getV()];
-			batch.draw(texture,(t.getX()-player.getX()+5)*100,(t.getY()-player.getY()+1)*100,100,100);
+			batch.draw(texture,(t.getX()-player.getX()+8)*100,(t.getY()-player.getY()+3)*100,100,100);
+			//fbatch.draw(batch, t.getX()+"|"+t.getY(), (t.getX()-player.getX()+5)*100,(t.getY()-player.getY()+2)*100);
 		}
 
-		batch.draw(Assets.player[0][5],500 ,100 ,100,200);
+		batch.draw(Assets.player[0][0],800 ,300 ,100,200);
 
-		fbatch.draw(batch, player.getX()+" | "+player.getY(), 10, Gdx.graphics.getHeight()-10);
+		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded(), 10, Gdx.graphics.getHeight()-10);
 
 		batch.end();
 

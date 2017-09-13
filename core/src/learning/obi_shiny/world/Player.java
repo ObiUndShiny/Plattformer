@@ -11,22 +11,24 @@ public class Player {
 
     private Touchscreen touchscreen;
     private static final float SPEED = 0.01f;
-    private static final int JUMP_TICKS = 20;
+    private static final int JUMP_TICKS = 6;
     private Vector gravity;
     private Vector velocity;
     private Vector position;
     private Vector jump;
     private boolean grounded;
     private int frames_in_air = 0;
+    private Level level;
 
 
-    public Player (Touchscreen touchscreen)
+    public Player (Touchscreen touchscreen, Level level)
     {
         this.touchscreen = touchscreen;
         this.gravity = new Vector(0,-0.01f);
         this.jump = new Vector(0,0.05f);
-        this.position = new Vector(5,1);
+        this.position = new Vector(5,4);
         this.velocity = new Vector(0,0);
+        this.level = level;
 
     }
 
@@ -56,7 +58,7 @@ public class Player {
             }
         }
 
-        grounded = position.getY() <= 1;
+        grounded = calcCollision();
 
         if(!grounded)
         {
@@ -76,12 +78,35 @@ public class Player {
         velocity.multiply(0.9f);
     }
 
+    private boolean calcCollision() {
+
+        int target_x = (int) position.getX();
+
+        for (Tile t : level.getTiles()) {
+            if (t.isSolid()) {
+                if (target_x == t.getX() || target_x+1 == t.getX()) {
+                    if (position.getY() <= t.getY()+1) {
+                        if (!this.grounded) position.setY(t.getY()+1);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+
+    }
+
     public float getX() {
         return position.getX();
     }
 
     public float getY() {
         return position.getY();
+    }
+
+    public boolean isGrounded() {
+        return grounded;
     }
 
 }

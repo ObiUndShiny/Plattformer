@@ -23,7 +23,7 @@ public class Assets {
         tilesheet = new Texture("tilesheet.png");
         tiles = TextureRegion.split(tilesheet, tilesheet.getWidth()/8, tilesheet.getHeight()/10);
         playersheet = new Texture("player.png");
-        player = TextureRegion.split(playersheet, playersheet.getWidth()/10, playersheet.getHeight()/9);
+        player = TextureRegion.split(playersheet, playersheet.getWidth()/8, playersheet.getHeight()/2);
         pokefont = loadFont("dialog_text",50);
     }
 
