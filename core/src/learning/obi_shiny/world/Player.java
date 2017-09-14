@@ -81,19 +81,36 @@ public class Player {
     private boolean calcCollision() {
 
         int target_x = (int) position.getX();
+        boolean grounded = false;
 
         for (Tile t : level.getTiles()) {
             if (t.isSolid()) {
+
+                // vertical collision
                 if (target_x == t.getX() || target_x+1 == t.getX()) {
                     if (position.getY() <= t.getY()+1) {
                         if (!this.grounded) position.setY(t.getY()+1);
-                        return true;
+                        grounded = true;
                     }
                 }
+
+                if ((int)position.getY()==t.getY()) {
+
+                    // left horizontal collision
+                    if (position.getX()-1 <= t.getX() && position.getX() >= t.getX()) {
+                        position.setX(t.getX()+1);
+                    }
+
+                    // right horizontal collision
+                    if (position.getX()+1 >= t.getX() && position.getX()+1 <= t.getX()+1) {
+                        position.setX(t.getX());
+                    }
+                }
+
             }
         }
 
-        return false;
+        return grounded;
 
     }
 
