@@ -67,7 +67,7 @@ public class Game extends ApplicationAdapter {
 
 		batch.draw(Assets.player[0][0],800 ,275 ,100,200);
 
-		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded() + player.dir(), 10, Gdx.graphics.getHeight()-10);
+		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded(), 10, Gdx.graphics.getHeight()-10);
 
 		batch.end();
 
