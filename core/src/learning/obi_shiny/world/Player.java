@@ -96,17 +96,18 @@ public class Player {
 
                 if ((int)position.getY()==t.getY()) {
 
+                    // right horizontal collision
+                    if (velocity.getX() > 0 && position.getX()+1 >= t.getX() && target_x+1 == t.getX()) {
+                        position.setX(t.getX()-1);
+                        velocity.setX(0);
+                    }
+
                     // left horizontal collision
-                    if (position.getX()-1 <= t.getX() && position.getX() >= t.getX()) {
+                    if (velocity.getX() < 0 && position.getX()-1 <= t.getX() && target_x == t.getX()) {
+                        velocity.setX(0);
                         position.setX(t.getX()+1);
                     }
-
-                    // right horizontal collision
-                    if (position.getX()+1 >= t.getX() && position.getX()+1 <= t.getX()+1) {
-                        position.setX(t.getX());
-                    }
                 }
-
             }
         }
 

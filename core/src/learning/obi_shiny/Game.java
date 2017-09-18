@@ -62,15 +62,14 @@ public class Game extends ApplicationAdapter {
 		{
 			TextureRegion texture = Assets.tiles[t.getU()][t.getV()];
 			batch.draw(texture,(t.getX()-player.getX()+8)*100,(t.getY()-player.getY()+3)*100,100,100);
-			//fbatch.draw(batch, t.getX()+"|"+t.getY(), (t.getX()-player.getX()+5)*100,(t.getY()-player.getY()+2)*100);
+			//fbatch.draw(batch, t.getX()+"|"+t.getY(), (t.getX()-player.getX()+8)*100,(t.getY()-player.getY()+4)*100);
 		}
 
 		batch.draw(Assets.player[0][0],800 ,275 ,100,200);
 
-		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded(), 10, Gdx.graphics.getHeight()-10);
+		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded() + player.dir(), 10, Gdx.graphics.getHeight()-10);
 
 		batch.end();
-
 
 	}
 	
