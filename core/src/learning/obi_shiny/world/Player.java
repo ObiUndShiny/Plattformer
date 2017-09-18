@@ -76,38 +76,54 @@ public class Player {
             position.addX(velocity);
         }
         velocity.multiply(0.9f);
+
+        if (position.getX() <= 0) {
+            position.setX(0);
+        }
+
     }
 
     private boolean calcCollision() {
 
         int target_x = (int) position.getX();
         boolean grounded = false;
+        boolean collides_on_sides = false;
 
         for (Tile t : level.getTiles()) {
             if (t.isSolid()) {
 
-                // vertical collision
-                if (target_x == t.getX() || target_x+1 == t.getX()) {
-                    if (position.getY() <= t.getY()+1) {
-                        if (!this.grounded) position.setY(t.getY()+1);
-                        grounded = true;
-                    }
-                }
+                collides_on_sides = false;
 
+                // horizonzal collision
                 if ((int)position.getY()==t.getY()) {
-
-                    // right horizontal collision
-                    if (velocity.getX() > 0 && position.getX()+1 >= t.getX() && target_x+1 == t.getX()) {
-                        position.setX(t.getX()-1);
-                        velocity.setX(0);
-                    }
 
                     // left horizontal collision
                     if (velocity.getX() < 0 && position.getX()-1 <= t.getX() && target_x == t.getX()) {
                         velocity.setX(0);
                         position.setX(t.getX()+1);
+                        collides_on_sides = true;
+                    }
+
+                    // right horizontal collision
+                    if (velocity.getX() > 0 && position.getX()+1 > t.getX() && target_x+1 == t.getX()) {
+                        velocity.setX(0);
+                        position.setX(t.getX()-1);
+                        collides_on_sides = true;
                     }
                 }
+
+                // vertical collision
+                if (target_x == t.getX() || target_x+1 == t.getX()) {
+                    if ((int)(position.getY()-0.001f) == t.getY()) {
+                        if (!this.grounded) {
+                            if (!collides_on_sides) {
+                                position.setY(t.getY()+1);
+                            }
+                        }
+                        grounded = true;
+                    }
+                }
+
             }
         }
 

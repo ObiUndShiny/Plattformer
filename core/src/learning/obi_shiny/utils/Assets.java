@@ -18,7 +18,7 @@ public class Assets {
     public static TextureRegion[][] player;
     public static BitmapFont pokefont;
 
-    public static void load(){
+    public static void load() {
 
         tilesheet = new Texture("tilesheet.png");
         tiles = TextureRegion.split(tilesheet, tilesheet.getWidth()/8, tilesheet.getHeight()/10);

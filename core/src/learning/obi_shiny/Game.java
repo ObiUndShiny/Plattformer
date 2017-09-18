@@ -37,14 +37,17 @@ public class Game extends ApplicationAdapter {
 			level.add(new Tile(true,n,2,1,1));
 		}
 
-		level.add(new Tile(true,8,3,0,4));
-		level.add(new Tile(true,9,3,0,4));
-		level.add(new Tile(true,10,3,0,4));
+		level.add(new Tile(false,8,3,0,4));
+		level.add(new Tile(false,9,3,0,4));
+		level.add(new Tile(false,10,3,0,4));
 
 		level.add(new Tile(false,5,3,0,1));
 
 		level.add(new Tile(true,3,3,1,1));
 		level.add(new Tile(true,2,3,1,1));
+
+		level.add(new Tile(true,12,3,1,1));
+		level.add(new Tile(true,12,4,1,1));
 
 		Gdx.input.setInputProcessor(touchscreen);
 		this.player = new Player(touchscreen, level);
