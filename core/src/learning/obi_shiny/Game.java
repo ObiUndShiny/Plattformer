@@ -68,7 +68,7 @@ public class Game extends ApplicationAdapter {
 			//fbatch.draw(batch, t.getX()+"|"+t.getY(), (t.getX()-player.getX()+8)*100,(t.getY()-player.getY()+4)*100);
 		}
 
-		batch.draw(Assets.player[0][0],800 ,275 ,100,200);
+		batch.draw(player.getSprite(), 800, 275, 100, 200);
 
 		fbatch.draw(batch, String.format("%.3f",player.getX())+" | "+String.format("%.3f",player.getY()) + " | " + ((int) player.getX()) + " | " + player.isGrounded(), 10, Gdx.graphics.getHeight()-10);
 
@@ -79,7 +79,6 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		Assets.tilesheet.dispose();
 	}
 
 	private void clearScreen() {

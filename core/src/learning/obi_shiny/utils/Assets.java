@@ -2,6 +2,7 @@ package learning.obi_shiny.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -12,19 +13,16 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Assets {
 
-    public static Texture tilesheet;
     public static TextureRegion[][] tiles;
-    public static Texture playersheet;
-    public static TextureRegion[][] player;
+
     public static BitmapFont pokefont;
 
     public static void load() {
 
-        tilesheet = new Texture("tilesheet.png");
-        tiles = TextureRegion.split(tilesheet, tilesheet.getWidth()/8, tilesheet.getHeight()/10);
-        playersheet = new Texture("player.png");
-        player = TextureRegion.split(playersheet, playersheet.getWidth()/8, playersheet.getHeight()/2);
+        tiles = split("tilesheet.png", 10, 8);
+
         pokefont = loadFont("dialog_text",50);
+
     }
 
     /**
@@ -42,4 +40,29 @@ public class Assets {
         generator.dispose();
         return font;
     }
+
+    public static AnimatedTexture loadAnimation(TextureRegion[][] sprites, int x, int y, int width, int height, float speed) {
+
+        TextureRegion[] animation_sprites = new TextureRegion[width*height];
+
+        int index = 0;
+        for (int row = x; row < x+width; row++) {
+            for (int col = y; col < y+height; col++) {
+                animation_sprites[index] = sprites[col][row];
+                index++;
+            }
+        }
+
+        Animation<TextureRegion> animation = new Animation<TextureRegion>(speed, animation_sprites);
+        AnimatedTexture atexture = new AnimatedTexture(animation);
+        return atexture;
+
+    }
+
+    public static TextureRegion[][] split(String file, int rows, int cols) {
+        Texture atlas = new Texture(file);
+        TextureRegion[][] sprites = TextureRegion.split(atlas, atlas.getWidth()/cols, atlas.getHeight()/rows);
+        return sprites;
+    }
+
 }

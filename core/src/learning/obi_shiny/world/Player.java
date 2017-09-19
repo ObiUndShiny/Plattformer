@@ -1,5 +1,9 @@
 package learning.obi_shiny.world;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import learning.obi_shiny.utils.AnimatedTexture;
+import learning.obi_shiny.utils.Assets;
 import learning.obi_shiny.utils.Touchscreen;
 import learning.obi_shiny.utils.Vector;
 
@@ -10,16 +14,21 @@ import learning.obi_shiny.utils.Vector;
 public class Player {
 
     private Touchscreen touchscreen;
+
     private static final float SPEED = 0.01f;
     private static final int JUMP_TICKS = 6;
+
     private Vector gravity;
     private Vector velocity;
     private Vector position;
     private Vector jump;
+
     private boolean grounded;
     private int frames_in_air = 0;
+
     private Level level;
 
+    private PlayerTextures textures;
 
     public Player (Touchscreen touchscreen, Level level)
     {
@@ -29,6 +38,7 @@ public class Player {
         this.position = new Vector(5,4);
         this.velocity = new Vector(0,0);
         this.level = level;
+        this.textures = new PlayerTextures();
 
     }
 
@@ -141,6 +151,22 @@ public class Player {
 
     public boolean isGrounded() {
         return grounded;
+    }
+
+    public TextureRegion getSprite() {
+
+        AnimatedTexture animation = null;
+
+        if (velocity.getX()>0) animation = textures.getRunRightAnimation();
+        if (velocity.getX()<0) animation =  textures.getRunLeftAnimation();
+
+        if (animation != null) {
+            animation.update();
+            return animation.getTexture();
+        }
+
+        return Assets.tiles[1][1];
+
     }
 
 }
